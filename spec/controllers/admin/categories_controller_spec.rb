@@ -55,7 +55,7 @@ describe Admin::CategoriesController do
       :keywords => "myCat2_key_word", :permalink => "myCat2_link",
       :description => "myCat2_descri" }
       assert_response :redirect, :action => "index"
-      expected(assigns(:category)).not_to be_nil
+      expect(assigns(:category)).not_to be_nil
       expect(flash[:notice]).to eq("Category was successfully saved.")
     end
   end
