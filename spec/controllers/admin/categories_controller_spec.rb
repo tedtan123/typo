@@ -38,6 +38,27 @@ describe Admin::CategoriesController do
     post :edit, :id => Factory(:category).id
     assert_response :redirect, :action => 'index'
   end
+  
+  describe "test_add" do
+    before (:each) do
+      get :new
+    end
+    
+    it 'should render template new' do
+      assert_template 'new'
+      assert_tag :tag => "table",
+        :attributes => { :id => "category_container" }
+    end
+
+    it 'should add a new category' do
+      post :edit, :category => { :name => "myCat2", 
+      :keywords => "myCat2_key_word", :permalink => "myCat2_link",
+      :description => "myCat2_descri" }
+      assert_response :redirect, :action => "index"
+      expected(assigns(:category)).not_to be_nil
+      expect(flash[:notice]).to eq("Category was successfully saved.")
+    end
+  end
 
   describe "test_destroy with GET" do
     before(:each) do
